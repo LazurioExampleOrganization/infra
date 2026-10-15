@@ -1,0 +1,17 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Env and secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+
+# Runtime output
+logs/
+output/
+.cache/

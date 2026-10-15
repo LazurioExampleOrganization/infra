@@ -1,0 +1,10 @@
+{
+  "schema_version": "companiesascode.todo_tasks.v1",
+  "scope": {
+    "id": "agentmint-infra",
+    "name": "AgentMint Infra",
+    "path": "infra",
+    "owner": "jannovak"
+  },
+  "tasks": []
+}
