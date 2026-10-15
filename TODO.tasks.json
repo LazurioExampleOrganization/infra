@@ -1,10 +1,10 @@
 {
   "schema_version": "companiesascode.todo_tasks.v1",
   "scope": {
-    "id": "agentmint-infra",
-    "name": "AgentMint Infra",
+    "id": "example-infra",
+    "name": "Lazurio Example Organization Infra",
     "path": "infra",
-    "owner": "jannovak"
+    "owner": "alexmorgan"
   },
   "tasks": []
 }

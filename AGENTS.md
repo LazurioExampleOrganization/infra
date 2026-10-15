@@ -1,28 +1,30 @@
-# AgentMint infra — instrukce pro agenty
+# Lazurio Example Organization infra: instructions for agents
 
-Tento scope vlastní infrastructure, access governance a deployment kontext
-AgentMintu.
+This scope owns the infrastructure, access governance and deployment context
+of Lazurio Example Organization.
 
 ## Source of truth
 
-Autoritativní záznamy v tomto repu jsou dokumenty o GitHub organizaci,
-přístupech, repo governance, deployment topologii a provozních runbookech.
+The authoritative records in this repository are the documents about the
+GitHub Organization, access, repository governance, deployment topology and
+operational runbooks.
 
-Root `README.md`, `MAP.md`, `ARCHITECTURE.md` a
-`company/scripts/modules.manifest.json` popisují, že `infra/` existuje; detailní
-kontext patří sem.
+The root `README.md`, `MAP.md`, `ARCHITECTURE.md` and `modules.manifest.json`
+describe that `infra/` exists; the detailed context belongs here.
 
-## Pravidla
+## Rules
 
-- Nezapisuj secrets, tokeny, OAuth session data ani privátní klíče.
-- Externí změny v GitHubu, cloudu, DNS nebo billing účtech dělej jen po
-  výslovném pokynu.
-- Pokud dokumentuješ stav externí služby, napiš datum ověření a zdroj
-  poznatku.
-- Access změny popisuj konkrétně: kdo, k čemu, proč a jak se bude auditovat.
+- Do not write secrets, tokens, OAuth session data or private keys.
+- Make external changes in GitHub, the cloud, DNS or billing accounts only on
+  explicit instruction.
+- When you document the state of an external service, write the date of
+  verification and the source of the finding.
+- Describe access changes concretely: who, to what, why and how it will be
+  audited.
 
-## Aktuální minimum
+## Current minimum
 
-Zatím je známý jen základní fakt: existuje GitHub organizace `LazurioExampleOrganization` pro
-repozitáře AgentMintu. Další infrastruktura se doplní až podle skutečných
-rozhodnutí.
+The GitHub Organization `LazurioExampleOrganization` holds the repositories of
+Lazurio Example Organization. Its verified access state is recorded in
+`access/github-organization.md`. Further infrastructure is added only as real
+decisions are made.

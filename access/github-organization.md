@@ -1,25 +1,63 @@
-# GitHub organizace LazurioExampleOrganization
+# GitHub Organization LazurioExampleOrganization
 
-Datum záznamu: 2026-05-23
+First recorded: 2026-05-23
 
-## Stav
+## State
 
-AgentMint má založenou GitHub organizaci:
+Verified 2026-10-16. Source: the GitHub REST API (Organization, Team,
+repositories and rulesets) and the root `lazurio.organization.json`, both read
+on 2026-10-16.
 
-- Organizace: `AgentMint`
+- Organization: `LazurioExampleOrganization` (id 325048785)
 - URL: `https://github.com/LazurioExampleOrganization`
-- Super-repo workspace: `git@github.com:LazurioExampleOrganization/LazurioExampleOrganization_GEN3.git`
-- Infra repo: `git@github.com:LazurioExampleOrganization/infra.git`
+- Plan: Free. The repositories are public.
+- Display name in Lazurio: "Lazurio Example Organization"
+- Root repository:
+  `git@github.com:LazurioExampleOrganization/LazurioExampleOrganization_GEN3.git`
+  (id 1421349619). Its Lazurio manifest binds the Organization and the root
+  repository by these ids; the binding state is verified.
+- Infra repository: `git@github.com:LazurioExampleOrganization/infra.git`
+- Lazurio for GitHub app: not installed yet. The Owner installs it.
 
-## Zatím nerozhodnuto
+## Repositories
 
-- branch protection pravidla pro `main`
-- týmy a role v GitHub organizaci
-- kdo bude mít přístup k restricted repozitářům
-- branch protection pro `LazurioExampleOrganization/infra`
+- `LazurioExampleOrganization_GEN3` (root)
+- `infra`
+- `design-system`
+- `mission-control`
+- `knowledgebase`
+- `research`
+- `experiments`
+- `playbooks`
+- `content`
+- `finance`
+- `automations`
+
+## Teams
+
+- Team `workspace` (closed, id 20129625) has Write on `knowledgebase`,
+  `research`, `experiments`, `playbooks`, `content`, `automations` and
+  `design-system`.
+- `finance` and `infra` are declared restricted and get no Team grant.
+
+## Rulesets
+
+- A ruleset named "main" applies to the default branch of every repository
+  except `mission-control`, which is held with Mission Control and has no
+  ruleset yet.
+- Each ruleset blocks deletion and force push.
+- Required status checks: "Organization check" in the root repository,
+  "check" in `knowledgebase` and "check" in `design-system`.
+- No ruleset requires reviews.
+
+## Not decided yet
+
+- roles in the GitHub Organization
+- who gets access to the restricted repositories
 
 ## Guardrails
 
-- Do tohoto repa nepatří žádné tokeny, SSH klíče ani OAuth session data.
-- Přístupy se mají zapisovat jako pravidla a auditní poznámky, ne jako secrets.
-- Reálné změny v GitHub organizaci dělej až po explicitním potvrzení.
+- No tokens, SSH keys or OAuth session data belong in this repository.
+- Record access as rules and audit notes, not as secrets.
+- Make real changes in the GitHub Organization only after explicit
+  confirmation.

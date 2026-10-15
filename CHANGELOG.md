@@ -1,9 +1,18 @@
 # Changelog
 
+## 2026-10-16
+
+- Translated the repository to English and renamed the company to Lazurio
+  Example Organization.
+- Recorded the current GitHub state, verified 2026-10-16: the Organization and
+  root repository ids and their verified binding, the repositories, the
+  `workspace` Team grants, the "main" rulesets and the module port pool. The
+  Lazurio for GitHub app is not installed yet.
+
 ## 2026-05-23
 
-- Založen lokální root-level `infra/` repo scope pro AgentMint.
-- Zapsán první infrastructure/access kontext: existence GitHub organizace
-  `AgentMint`.
-- Publikován private GitHub repozitář `LazurioExampleOrganization/infra` a zapsán jeho SSH
-  remote.
+- Created the local root-level `infra/` repository scope for the company.
+- Recorded the first infrastructure and access context: the GitHub
+  Organization `LazurioExampleOrganization` exists.
+- Published the private GitHub repository `LazurioExampleOrganization/infra`
+  and recorded its SSH remote.

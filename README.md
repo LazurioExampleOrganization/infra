@@ -1,34 +1,48 @@
-# AgentMint Infra
+# Lazurio Example Organization infra
 
-`infra/` je root-level nested Git repo pro infrastrukturu, access governance a
-deployment kontext AgentMintu.
+`infra/` is the root-level nested Git repository for the infrastructure,
+access governance and deployment context of Lazurio Example Organization.
 
-Zatím tady držíme jen první ověřený stav: AgentMint má založenou GitHub
-organizaci `LazurioExampleOrganization`.
+It holds the verified state of the GitHub Organization
+`LazurioExampleOrganization`. The full access record is in
+[`access/github-organization.md`](access/github-organization.md).
 
-## Aktuální stav
+## Current state
 
-- GitHub organizace: `AgentMint`
-- Super-repo: `git@github.com:LazurioExampleOrganization/LazurioExampleOrganization_GEN3.git`
-- Infra repo: `git@github.com:LazurioExampleOrganization/infra.git`
-- Produkční cloud, doména a deployment pipeline: zatím nenastaveno
+Verified 2026-10-16.
 
-## Co sem patří
+- GitHub Organization: `LazurioExampleOrganization` (id 325048785), Free plan,
+  public repositories. Display name in Lazurio: "Lazurio Example
+  Organization".
+- Root repository:
+  `git@github.com:LazurioExampleOrganization/LazurioExampleOrganization_GEN3.git`
+  (id 1421349619). Its Lazurio manifest binds the Organization and the root
+  repository by these ids; the binding state is verified.
+- Infra repository: `git@github.com:LazurioExampleOrganization/infra.git`. It
+  is declared restricted and gets no Team grant.
+- Repositories, the `workspace` Team and the rulesets: see the
+  [access record](access/github-organization.md).
+- Lazurio for GitHub app: not installed yet. The Owner installs it.
+- Module port pool of the Organization: 25300–25399.
+- Production cloud, domain and deployment pipeline: not set up yet.
 
-- GitHub organizace, týmy, repo governance a branch protection pravidla
-- access model pro lidi, agenty a budoucí správce workspace
-- deployment topologie a provozní runbooky
-- auditní poznámky k infrastruktuře
+## What belongs here
 
-## Co sem nepatří
+- the GitHub Organization, Teams, repository governance and branch protection
+  rules
+- the access model for people, agents and future workspace administrators
+- deployment topology and operational runbooks
+- audit notes on the infrastructure
 
-- secrets, tokeny, OAuth session data ani privátní klíče
-- zákaznická data
-- finanční exporty a citlivé payment provider výpisy
-- business strategie, která patří do Mission Control nebo knowledgebase
+## What does not belong here
+
+- secrets, tokens, OAuth session data or private keys
+- customer data
+- financial exports and sensitive payment provider statements
+- business strategy, which belongs in Mission Control or the knowledgebase
 
 ## Source of truth
 
-Tento repo scope je source of truth pro infrastructure a access governance.
-Root workspace manifest `company/scripts/modules.manifest.json` drží pouze
-slot a metadata o tom, že `infra/` existuje jako samostatné repo.
+This repository scope is the source of truth for infrastructure and access
+governance. The root manifest `modules.manifest.json` holds only the slot and
+the metadata that `infra/` exists as a separate repository.
