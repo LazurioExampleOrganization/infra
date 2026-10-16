@@ -23,10 +23,11 @@ Verified 2026-10-16.
 - Repositories, the `workspace` Team and the rulesets: see the
   [access record](access/github-organization.md).
 - Lazurio for GitHub app: not installed yet. The Owner installs it.
-- Microsoft 365 Business Premium trial: active; Sam Taylor has the single
-  assigned license and a provisioned mailbox, and the Example SharePoint
-  test fixture is verified. Recurring billing remains On with Microsoft
-  support; see the [tenant record](access/microsoft-365.md).
+- Microsoft 365 Business Premium trial: provisioned with one license assigned
+  to Sam Taylor, a mailbox and a SharePoint fixture. Post-support
+  billing displays Disabled / recurring On despite Microsoft's no-charge
+  assurance. Sam can read the SharePoint fixture; Outlook still fails. See the
+  [tenant record](access/microsoft-365.md).
 - Entra company app: single-tenant public client with nine delegated Graph
   permissions granted by the administrator; see the
   [verified app configuration](access/microsoft-365.md#entra-company-app).
