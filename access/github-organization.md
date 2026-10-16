@@ -4,9 +4,9 @@ First recorded: 2026-05-23
 
 ## State
 
-Verified 2026-10-16. Source: the GitHub REST API (Organization, Team,
-repositories and rulesets) and the root `lazurio.organization.json`, both read
-on 2026-10-16.
+Verified 2026-10-16, updated after the Mission Control repositories were set
+up. Source: the GitHub REST API (Organization, Team, repositories and
+rulesets) and the root `lazurio.organization.json`, both read on 2026-10-16.
 
 - Organization: `LazurioExampleOrganization` (id 325048785)
 - URL: `https://github.com/LazurioExampleOrganization`
@@ -25,6 +25,7 @@ on 2026-10-16.
 - `infra`
 - `design-system`
 - `mission-control`
+- `mission-control-data` (default branch `v3`)
 - `knowledgebase`
 - `research`
 - `experiments`
@@ -36,18 +37,19 @@ on 2026-10-16.
 ## Teams
 
 - Team `workspace` (closed, id 20129625) has Write on `knowledgebase`,
-  `research`, `experiments`, `playbooks`, `content`, `automations` and
-  `design-system`.
+  `research`, `experiments`, `playbooks`, `content`, `automations`,
+  `design-system`, `mission-control` and `mission-control-data`.
 - `finance` and `infra` are declared restricted and get no Team grant.
 
 ## Rulesets
 
 - A ruleset named "main" applies to the default branch of every repository
-  except `mission-control`, which is held with Mission Control and has no
-  ruleset yet.
+  (`v3` for `mission-control-data`).
 - Each ruleset blocks deletion and force push.
 - Required status checks: "Organization check" in the root repository,
-  "check" in `knowledgebase` and "check" in `design-system`.
+  "check" in `knowledgebase` and `design-system`, "bun run test
+  (ubuntu-latest)" and "bun run test (windows-latest)" in `mission-control`,
+  and "validate" in `mission-control-data`.
 - No ruleset requires reviews.
 
 ## Not decided yet

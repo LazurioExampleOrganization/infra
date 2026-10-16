@@ -1,5 +1,13 @@
 # Changelog
 
+## 20261016.2
+
+### Changed
+
+- The access record lists `mission-control-data`, the Team grants on
+  `mission-control` and `mission-control-data`, and their rulesets with the
+  required checks.
+
 ## 2026-10-16
 
 - Translated the repository to English and renamed the company to Lazurio
