@@ -23,9 +23,10 @@ Verified 2026-10-16.
 - Repositories, the `workspace` Team and the rulesets: see the
   [access record](access/github-organization.md).
 - Lazurio for GitHub app: not installed yet. The Owner installs it.
-- Microsoft 365 Business Premium trial: active, with provisioning blocked on
-  disabling recurring billing without immediately ending service; see the
-  [tenant record](access/microsoft-365.md).
+- Microsoft 365 Business Premium trial: active; Sam Taylor has the single
+  assigned license and a provisioned mailbox, and the Example SharePoint
+  test fixture is verified. Recurring billing remains On with Microsoft
+  support; see the [tenant record](access/microsoft-365.md).
 - Module port pool of the Organization: 25300–25399.
 - Production cloud, domain and deployment pipeline: not set up yet.
 
