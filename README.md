@@ -27,6 +27,9 @@ Verified 2026-10-16.
   assigned license and a provisioned mailbox, and the Example SharePoint
   test fixture is verified. Recurring billing remains On with Microsoft
   support; see the [tenant record](access/microsoft-365.md).
+- Entra company app: single-tenant public client with nine delegated Graph
+  permissions granted by the administrator; see the
+  [verified app configuration](access/microsoft-365.md#entra-company-app).
 - Module port pool of the Organization: 25300–25399.
 - Production cloud, domain and deployment pipeline: not set up yet.
 

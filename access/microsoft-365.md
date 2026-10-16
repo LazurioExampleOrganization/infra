@@ -130,6 +130,49 @@ Group membership was saved and read back as two members: Example Admin
 (Owner) and Sam Taylor (Member). Sam has not yet signed in, so access under
 his session has not been tested.
 
+## Entra company app
+
+Created and verified 2026-10-16 in Microsoft Entra admin center, signed in as
+Example Admin in this tenant. The Organization Admin authorized registration
+and tenant-wide admin consent for the following delegated permissions.
+
+| Item | Verified state |
+| --- | --- |
+| Display name | `Lazurio (Lazurio Example Organization)` |
+| Application (client) ID | `e2ad5755-21c1-46db-bfcb-8ba290440414` |
+| Directory (tenant) ID | `9755f325-aab4-4294-8232-88dcfefacb96` |
+| Supported account types | My organization only (`AzureADMyOrg`, single tenant) |
+| Authentication platform | Mobile and desktop applications only |
+| Redirect URI | `http://localhost/api/oauth/callback` — the only registered URI |
+| Web / SPA platforms | None; Overview reports 0 web, 0 spa, 1 public client |
+| Allow public client flows | Disabled (No) |
+| Client secrets / certificates / federated credentials | 0 / 0 / 0 |
+| Enterprise application: Assignment required | No (Off), retained for this test tenant |
+| Enterprise application: Enabled for users to sign in | Yes |
+
+API permissions contains exactly these nine **Microsoft Graph Delegated**
+permissions, each read back as **Granted for Lazurio Example Organization**:
+
+- `openid`
+- `profile`
+- `email`
+- `offline_access`
+- `User.Read`
+- `Mail.ReadWrite`
+- `Calendars.ReadWrite`
+- `Files.ReadWrite.All`
+- `Sites.Read.All`
+
+There are no Application permissions and no `Mail.Send` permission.
+Verification used the saved Overview, Authentication (Preview), API permissions,
+Certificates & secrets, and Enterprise application Properties pages. Public
+client flows remained disabled; no secret or certificate was created.
+
+The Organization has no hosted Environment callback to register yet. Add its
+Launchpad callback later using the shared IT runbook. Registration and admin
+consent are complete; an OAuth sign-in, token refresh and Graph access through
+Lazurio have not been tested by this provisioning task.
+
 ## Ownership and credential custody
 
 Billing and recovery belong to the Organization Owner. Actual payment,
@@ -149,8 +192,8 @@ details, card details, tokens and session data must never enter Git or issues.
 - Resolve recurring billing and verify the authoritative trial end. A first
   sign-in as Sam (including the required password change and any MFA) and
   mail delivery / file access tests remain human-assisted follow-up checks.
-- The Entra company app is a separate next step for IT, following the shared
-  Microsoft 365 procedure linked above. No app registration, application
-  consent or external connector was created in this task.
+- Connect and test the Entra company app through the shared Microsoft 365
+  procedure. No external connector or integration connection was created by
+  this app-provisioning task.
 - `settings.integrations.microsoft365` remains unset. Add it only after the
   company app exists and compatible readers have been released.
