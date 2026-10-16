@@ -188,8 +188,15 @@ handoff prompts. The Owner performs any password/MFA step directly.
 `settings.integrations.microsoft365` is still unset; only activate it once
 compatible readers are released and the applicable Organization change is
 approved. OAuth sign-in, refresh and delegated Graph mail/file access are
-separate acceptance tests under the shared runbook. Treat the current Outlook
-failure as an open readiness item, not a passed integration canary.
+separate acceptance tests under the shared runbook. SharePoint discovery and
+file-read integration tests can proceed independently of Outlook. Browser
+SharePoint access has passed; Graph access has not yet been tested.
+
+On 2026-10-17, the Owner chose to continue with the working SharePoint path
+and defer further Microsoft correspondence. Retry Outlook later; delayed
+mailbox provisioning is a hypothesis, not a confirmed explanation of the
+observed error/loading. Do not mark the mail canary passed until an inbox
+opens and the relevant integration checks succeed.
 
 ## Ownership and credential custody
 
