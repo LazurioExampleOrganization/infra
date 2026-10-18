@@ -19,7 +19,7 @@ D20, D23, D30, D33 and D36).
 | Admin | The Organization owner role. Every owner is Admin on every repository. The owners are the Owner and Bob. |
 | Write, Read in a Team column | The Team's grant on the repository. |
 | Write, Read in a person's column | The strongest of the person's owner role and the grants of their Teams. Alena's Write comes only from Team `workspace`. |
-| Read (public) | The repository is public, so anyone reads it, with or without a GitHub account. No grant is involved, and nobody writes without one. |
+| Read (public) | The repository is public, so anyone reads it, with or without a GitHub account. No grant is involved, and public read never gives Write. |
 | none | A private repository without a grant. |
 | – | The Team has no grant on the repository. |
 
@@ -120,9 +120,10 @@ Integrations) follows in task `task-2026-10-18-006`.
 Milestone L3 adds modules through the normal creation path; the module charter
 (task `task-2026-10-18-007`) names their Teams. Each new module gets its row
 here when it is created, and its grants are set on GitHub in the same step.
-Already decided by the plan:
+Already set by the plan:
 
-- `deals` is shared by `workspace` and `sales` (D30).
+- The sales modules, the first being `deals`, are shared by `workspace` and
+  `sales` (D30).
 - `finance` stays restricted, and `pricebook` will be restricted too: Alena
   reads them but cannot write them.
 
