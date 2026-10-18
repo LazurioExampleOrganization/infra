@@ -20,9 +20,12 @@ Verified 2026-10-16.
   repository by these ids; the binding state is verified.
 - Infra repository: `git@github.com:LazurioExampleOrganization/infra.git`. It
   is declared restricted and gets no Team grant.
-- Repositories, the `workspace` Team and the rulesets: see the
-  [access record](access/github-organization.md).
-- Lazurio for GitHub app: not installed yet. The Owner installs it.
+- Repositories and rulesets: see the
+  [access record](access/github-organization.md). Teams and the right of every
+  person on every repository: see the [access matrix](access/matrix.md)
+  (verified 2026-10-18).
+- Lazurio for GitHub app: installed on all repositories (verified
+  2026-10-18).
 - Microsoft 365 Business Premium trial: provisioned with one license assigned
   to Sam Taylor, a mailbox and a SharePoint fixture. Post-support
   billing displays Disabled / recurring On despite Microsoft's no-charge

@@ -1,5 +1,21 @@
 # Changelog
 
+## 20261018.1
+
+### Added
+
+- `access/matrix.md`: the public access matrix of plan EX-0014 (task
+  `task-2026-10-18-001`). It lists every repository with the right of each
+  Team and person and how GitHub enforces it, the new closed Teams `finance`
+  (Bob, Write on `finance`) and `sales` (Alena and Bob, no grant until the
+  sales modules exist), and that visitors get no membership or Team.
+
+### Changed
+
+- The access record lists the owners and the member, the base permission,
+  the private Deployment Repo `machines`, the installed GitHub Apps and the
+  decided roles and restricted access, and points to the matrix for Teams.
+
 ## 20261016.2
 
 ### Changed
