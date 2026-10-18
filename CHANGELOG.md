@@ -1,5 +1,23 @@
 # Changelog
 
+## 20261018.2
+
+### Changed
+
+- The access record holds the rulesets of plan EX-0014 (task
+  `task-2026-10-18-002`): every public repository except
+  `mission-control-data` requires a pull request, its CI where it exists and a
+  merge commit, and no ruleset has a bypass actor. It lists the ruleset and
+  required checks per repository, the repositories without CI, the private
+  Deployment Repo exception, the merge method that keeps the noreply author,
+  the code owners, how to switch on one required approval with task
+  `task-2026-10-18-011`, and the break-glass.
+
+### Added
+
+- `.github/CODEOWNERS` naming Bob, because only the owners write this
+  repository.
+
 ## 20261018.1
 
 ### Added
