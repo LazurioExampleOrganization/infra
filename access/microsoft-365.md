@@ -144,8 +144,8 @@ and tenant-wide admin consent for the following delegated permissions.
 | Directory (tenant) ID | `9755f325-aab4-4294-8232-88dcfefacb96` |
 | Supported account types | My organization only (`AzureADMyOrg`, single tenant) |
 | Authentication platform | Mobile and desktop applications only |
-| Redirect URI | `http://localhost/api/oauth/callback` — the only registered URI |
-| Web / SPA platforms | None; Overview reports 0 web, 0 spa, 1 public client |
+| Redirect URIs (verified 2026-10-21) | `http://localhost/api/oauth/callback`; `https://launchpad.admin-01.lazurioexampleorganization.lazurio.io/api/integrations/oauth/callback`; `https://launchpad.team-01.lazurioexampleorganization.lazurio.io/api/integrations/oauth/callback` |
+| Web / SPA platforms | None; all three redirect URIs are registered under Mobile and desktop applications (verified 2026-10-21) |
 | Allow public client flows | Disabled (No) |
 | Client secrets / certificates / federated credentials | 0 / 0 / 0 |
 | Enterprise application: Assignment required | No (Off), retained for this test tenant |
@@ -169,10 +169,21 @@ Verification used the saved Overview, Authentication (Preview), API permissions,
 Certificates & secrets, and Enterprise application Properties pages. Public
 client flows remained disabled; no secret or certificate was created.
 
-The Organization has no hosted Environment callback to register yet. Add its
-Launchpad callback later using the shared IT runbook. Registration and admin
-consent are complete; an OAuth sign-in, token refresh and Graph access through
-Lazurio have not been tested by this provisioning task.
+On 2026-10-21, the Organization Admin authorized adding the `admin-01` and
+`team-01` HTTPS callbacks listed above for the DEV-6626 V1 public-client test.
+Source: Microsoft Entra admin center → App registrations → this application
+→ Authentication (Preview). The portal accepted both addresses under the
+existing Mobile and desktop applications platform, and the saved list was
+read back with all three URIs. The localhost callback was retained. Settings
+still showed Allow public client flows **Disabled (No)**; no Web or SPA
+platform was added. No permissions, credentials, users, licenses, billing or
+Environment runtime were changed by this callback-registration task.
+
+This verifies registration acceptance only. OAuth sign-in, token exchange,
+refresh and Graph access through these hosted callbacks remain separate
+integration acceptance tests; no hosted Environment was changed or tested.
+The permission and credential inventory above was verified on 2026-10-16,
+not re-audited as part of this narrow callback change.
 
 ## Handoff for integration testing (DEV-6626)
 
