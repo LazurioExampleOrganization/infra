@@ -144,8 +144,8 @@ and tenant-wide admin consent for the following delegated permissions.
 | Directory (tenant) ID | `9755f325-aab4-4294-8232-88dcfefacb96` |
 | Supported account types | My organization only (`AzureADMyOrg`, single tenant) |
 | Authentication platform | Mobile and desktop applications only |
-| Redirect URIs (verified 2026-10-21) | `http://localhost/api/oauth/callback`; `https://launchpad.admin-01.lazurioexampleorganization.lazurio.io/api/integrations/oauth/callback`; `https://launchpad.team-01.lazurioexampleorganization.lazurio.io/api/integrations/oauth/callback` |
-| Web / SPA platforms | None; all three redirect URIs are registered under Mobile and desktop applications (verified 2026-10-21) |
+| Redirect URIs (verified 2026-10-23) | `http://localhost/api/oauth/callback`; `https://launchpad.lazurio-alena.lazurioexampleorganization.lazurio.io/api/integrations/oauth/callback`; `https://launchpad.lazurio-bob.lazurioexampleorganization.lazurio.io/api/integrations/oauth/callback`; `https://launchpad.team-01.lazurioexampleorganization.lazurio.io/api/integrations/oauth/callback` |
+| Web / SPA platforms | None; all four redirect URIs are registered under Mobile and desktop applications (verified 2026-10-23) |
 | Allow public client flows | Disabled (No) |
 | Client secrets / certificates / federated credentials | 0 / 0 / 0 |
 | Enterprise application: Assignment required | No (Off), retained for this test tenant |
@@ -179,9 +179,27 @@ still showed Allow public client flows **Disabled (No)**; no Web or SPA
 platform was added. No permissions, credentials, users, licenses, billing or
 Environment runtime were changed by this callback-registration task.
 
-This verifies registration acceptance only. OAuth sign-in, token exchange,
-refresh and Graph access through these hosted callbacks remain separate
-integration acceptance tests; no hosted Environment was changed or tested.
+On 2026-10-23 the Organization Admin authorized replacing the `admin-01`
+callback, whose Environment is being retired (machines#114), with those of the two Work
+Environments `lazurio-bob` and `lazurio-alena`. They are the callbacks the
+Dashboard computes from the navigation registry, and the Example root's
+`settings.integrations.microsoft365.callbacks` has carried the same three since
+LazurioExampleOrganization_GEN3#20. The localhost callback and `team-01` were kept. The saved list was
+read back with the four URIs above; public client flows stayed Disabled and no
+other setting was changed.
+
+These records verify registration only. The integration itself was accepted
+separately on `admin-01` (DEV-6626, 2026-10-22/23):
+- the own-browser sign-in through the hosted callback;
+- the code exchange without a secret;
+- Graph reads;
+- the refresh;
+- a revoke;
+- the retry in the Environment browser when Microsoft wants MFA
+  (LazurioPlatform #603).
+
+The `lazurio-bob` and `lazurio-alena` callbacks are registered but not yet
+tested.
 The permission and credential inventory above was verified on 2026-10-16,
 not re-audited as part of this narrow callback change.
 
