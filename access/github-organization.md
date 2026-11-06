@@ -80,13 +80,43 @@ own repository ruleset, named "main", on its default branch. Every ruleset:
 | `finance` | `main` | 25202740 | required | none, no CI yet |
 | `infra` | `main` | 25202739 | required | none, no CI yet |
 | `knowledgebase` | `main` | 25202737 | required | "check" |
-| `mission-control` | `main` | 25208607 | required | "bun run test (ubuntu-latest)", "bun run test (windows-latest)" |
+| `mission-control` | `main` | 25208607 | required | "bun run check (ubuntu-latest)" (proposed with Mission Control 4.0.0, see below) |
 | `mission-control-data` | `v3` | 25206628 | not required, held | "validate" |
 | `playbooks` | `main` | 25202743 | required | none, no CI yet |
 | `research` | `main` | 25202746 | required | none, no CI yet |
 | `machines` (private) | `main` | none | the exception | none |
+| `presentations` (private) | `main` | none | the exception | none |
 
-### Repositories without CI
+### Mission Control 4.0.0: the required check (proposed 2026-11-06)
+
+Read back on 2026-11-06: ruleset 25208607 requires only
+"bun run test (ubuntu-latest)" (not also "bun run test (windows-latest)" as
+recorded on 2026-10-18). Mission Control 4.0.0, the Lazurio Marketplace
+template release the Organization takes in
+[mission-control#7](https://github.com/LazurioExampleOrganization/mission-control/pull/7),
+renames its Linux job to "bun run check (ubuntu-latest)". Its Windows job
+"bun run check (windows-latest)" runs only when a pull request changes the
+App, the templates or a workflow, so it cannot be required. Until the
+ruleset requires the new name, #7 cannot be merged; after it does, no pull
+request built on 3.1.0 can. So an owner changes the one context in the same
+window as merging #7: Settings → Rules → Rulesets → "main" → Require status
+checks, replace "bun run test (ubuntu-latest)" with
+"bun run check (ubuntu-latest)" (GitHub Actions), and reads it back:
+
+```sh
+gh api repos/LazurioExampleOrganization/mission-control/rulesets/25208607 \
+  --jq '.rules[] | select(.type=="required_status_checks") | .parameters.required_status_checks'
+```
+
+### `presentations`
+
+Created on 2026-11-06 by `lazurio module create` for the Marketplace
+adoption of Presentations (plan DEV-6593). Like every module the command
+creates, it is private, so on GitHub Free it has no ruleset (HTTP 403), the
+same exception as `machines`, and no Team grant yet. Whether it becomes
+public like the older modules, and Team `workspace`'s Write, are an owner's
+decision.
+
 
 `automations`, `content`, `experiments`, `finance`, `infra`, `playbooks` and
 `research` have no CI workflow yet, so their rulesets require a pull request
