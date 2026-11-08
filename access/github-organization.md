@@ -7,8 +7,9 @@ First recorded: 2026-05-23
 Verified 2026-10-18. Source: the GitHub REST API (Organization, members,
 Teams, repositories, collaborators, rulesets and app installations), read on
 2026-10-18, and the root `lazurio.organization.json`, read on 2026-10-16.
-The repositories, their visibility, the Teams and the rulesets were read back
-on 2026-11-08 (plan DEV-6593).
+The repositories, their visibility, the Teams' repository grants and the
+rulesets were read back on 2026-11-08 (plan DEV-6593); the members and the
+[access matrix](matrix.md) are as of 2026-10-18.
 
 - Organization: `LazurioExampleOrganization` (id 325048785)
 - URL: `https://github.com/LazurioExampleOrganization`
@@ -70,7 +71,10 @@ Verified 2026-10-18 by reading every ruleset back with `gh` (EX-0014 task
 `task-2026-10-18-002`, milestone L1).
 
 GitHub Free has no Organization rulesets, so each public repository has its
-own repository ruleset, named "main", on its default branch. Every ruleset:
+own repository ruleset, named "main", on its default branch. The one
+exception is `presentations`, public since 2026-11-06, whose ruleset an owner
+still creates (see [`presentations`](#presentations)); until then nothing
+protects its `main`. Every ruleset:
 
 - blocks deletion and force push;
 - requires a pull request: nothing reaches the default branch by a direct
@@ -222,8 +226,8 @@ used during the migration, is a direct push that the rulesets now reject.
 
 ## Code owners
 
-Every public repository except `mission-control-data` has
-`.github/CODEOWNERS` with one rule for every path. GitHub asks the code
+Every public repository except `mission-control-data` and `presentations`
+has `.github/CODEOWNERS` with one rule for every path. GitHub asks the code
 owners for a review when a pull request opens. Their approval is not
 required, because no ruleset requires a code owner review.
 
@@ -231,7 +235,7 @@ required, because no ruleset requires a code owner review.
 |---|---|---|
 | Team `workspace` | `app-access`, `automations`, `content`, `design-system`, `experiments`, `knowledgebase`, `mission-control`, `playbooks`, `research` | The Team writes these repositories. |
 | Bob (`@lazurio-bob`) | `finance` | Finance belongs to Bob: Team `finance` (Bob only) writes this restricted module. |
-| Bob (`@lazurio-bob`) | `LazurioExampleOrganization_GEN3`, `infra` | Only the owners write these. GitHub accepts a code owner only with Write, and Team `workspace` has Read on the root and no grant on `infra`, so the Team cannot be named. Bob is the owner named. |
+| Bob (`@lazurio-bob`) | `LazurioExampleOrganization_GEN3`, `infra` | Of the people's Teams, none writes these: Team `workspace` has Read on the root and no grant on `infra`, and GitHub accepts a code owner only with Write, so it cannot be named. The owners write them, and Team `steward`, the review account, has Maintain on them to review. Bob is the owner named. |
 
 The pricing module, planned as `pricebook`, gets Bob as code owner when it is
 created in milestone L3. `presentations` has no file yet; it gets Team
@@ -293,7 +297,9 @@ gh api repos/LazurioExampleOrganization/<repository>/rules/branches/<default bra
 - Governance (EX-0014 task `task-2026-10-18-002`): every public repository
   requires a pull request, its CI where it exists and a merge commit, has a
   CODEOWNERS file and has no bypass actor, as recorded in
-  [Rulesets](#rulesets); `mission-control-data` is held.
+  [Rulesets](#rulesets); `mission-control-data` is held, and `presentations`
+  gets its ruleset and CODEOWNERS file as described in
+  [`presentations`](#presentations).
 
 ## Next
 
