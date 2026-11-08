@@ -7,11 +7,14 @@ First recorded: 2026-05-23
 Verified 2026-10-18. Source: the GitHub REST API (Organization, members,
 Teams, repositories, collaborators, rulesets and app installations), read on
 2026-10-18, and the root `lazurio.organization.json`, read on 2026-10-16.
+The repositories, their visibility, the Teams and the rulesets were read back
+on 2026-11-08 (plan DEV-6593).
 
 - Organization: `LazurioExampleOrganization` (id 325048785)
 - URL: `https://github.com/LazurioExampleOrganization`
-- Plan: Free. Every repository is public except the private Deployment Repo
-  `machines`.
+- Plan: Free. Every repository is public except three private ones: the
+  Deployment Repo `machines` and the Time Tracker repositories `time-tracker`
+  and `time-tracker-data`.
 - Base permission of members: none. Two-factor authentication is required.
 - Owners: the Owner (a Lazurio maintainer's account) and Bob
   (`lazurio-bob`). Member: Alena (`lazurio-alena`). Members are only the
@@ -27,6 +30,9 @@ Teams, repositories, collaborators, rulesets and app installations), read on
 
 ## Repositories
 
+Seventeen repositories, read back on 2026-11-08. All are public except the
+three marked private.
+
 - `LazurioExampleOrganization_GEN3` (root)
 - `infra`
 - `design-system`
@@ -39,7 +45,11 @@ Teams, repositories, collaborators, rulesets and app installations), read on
 - `content`
 - `finance`
 - `automations`
+- `app-access`
+- `presentations` (public since 2026-11-06, see [`presentations`](#presentations))
 - `machines` (private Deployment Repo)
+- `time-tracker` (private)
+- `time-tracker-data` (private, default branch `v3`)
 
 ## Teams and rights
 
@@ -48,7 +58,11 @@ repository are in the [access matrix](matrix.md). In short: Team `workspace`
 writes the workspace modules except `finance` and the root applications,
 Team `finance` (Bob) writes `finance`, Team `sales` has no grant until the
 sales modules exist, and the per-person Teams `lazurio-bob` and
-`lazurio-alena` only admit their Work Environments.
+`lazurio-alena` only admit their Work Environments. Team `steward`, the
+review account, has Maintain on every public repository and no grant on
+the private ones, so it can review their pull requests (read back on
+2026-11-08); Team
+`server-services` reads the root.
 
 ## Rulesets
 
@@ -80,19 +94,22 @@ own repository ruleset, named "main", on its default branch. Every ruleset:
 | `finance` | `main` | 25202740 | required | none, no CI yet |
 | `infra` | `main` | 25202739 | required | none, no CI yet |
 | `knowledgebase` | `main` | 25202737 | required | "check" |
-| `mission-control` | `main` | 25208607 | required | "bun run check (ubuntu-latest)" (proposed with Mission Control 4.0.0, see below) |
+| `mission-control` | `main` | 25208607 | required | "bun run check (ubuntu-latest)" (proposed with Mission Control 4.x, see below) |
 | `mission-control-data` | `v3` | 25206628 | not required, held | "validate" |
 | `playbooks` | `main` | 25202743 | required | none, no CI yet |
 | `research` | `main` | 25202746 | required | none, no CI yet |
+| `app-access` | `main` | 26692581 | required | none |
+| `presentations` | `main` | none yet, see [`presentations`](#presentations) | proposed: required | proposed: "check" |
 | `machines` (private) | `main` | none | the exception | none |
-| `presentations` (private) | `main` | none | the exception | none |
+| `time-tracker` (private) | `main` | none | the exception | none |
+| `time-tracker-data` (private) | `v3` | none | the exception | none |
 
-### Mission Control 4.0.0: the required check (proposed 2026-11-06)
+### Mission Control 4.x: the required check (proposed 2026-11-06)
 
-Read back on 2026-11-06: ruleset 25208607 requires only
-"bun run test (ubuntu-latest)" (not also "bun run test (windows-latest)" as
-recorded on 2026-10-18). Mission Control 4.0.0, the Lazurio Marketplace
-template release the Organization takes in
+Read back on 2026-11-06 and again on 2026-11-08: ruleset 25208607 requires
+only "bun run test (ubuntu-latest)" (not also "bun run test (windows-latest)"
+as recorded on 2026-10-18). Mission Control 4.x, the Lazurio Marketplace
+template the Organization takes at 4.1.0 in
 [mission-control#7](https://github.com/LazurioExampleOrganization/mission-control/pull/7),
 renames its Linux job to "bun run check (ubuntu-latest)". Its Windows job
 "bun run check (windows-latest)" runs only when a pull request changes the
@@ -108,15 +125,47 @@ gh api repos/LazurioExampleOrganization/mission-control/rulesets/25208607 \
   --jq '.rules[] | select(.type=="required_status_checks") | .parameters.required_status_checks'
 ```
 
+The data repository's required check stays "validate": the 4.x workflow
+keeps that job name, so ruleset 25206628 of `mission-control-data` needs no
+change.
+
 ### `presentations`
 
 Created on 2026-11-06 by `lazurio module create` for the Marketplace
-adoption of Presentations (plan DEV-6593). Like every module the command
-creates, it is private, so on GitHub Free it has no ruleset (HTTP 403), the
-same exception as `machines`, and no Team grant yet. Whether it becomes
-public like the older modules, and Team `workspace`'s Write, are an owner's
-decision.
+adoption of Presentations (plan DEV-6593), private like every module the
+command creates. The same day, after a check of its tree and history, it was
+made public like the Organization's other modules and got their Team grants:
+`workspace` Write and `steward` Maintain (read back on 2026-11-08). A public
+repository can have a ruleset on GitHub Free, but it has none yet, and no
+`.github/CODEOWNERS`.
 
+The owner's step, after
+[presentations#1](https://github.com/LazurioExampleOrganization/presentations/pull/1)
+brings the workflow `Check` with its job "check" to `main`: create the
+ruleset "main" like that of `design-system` and read it back.
+
+```sh
+gh api -X POST repos/LazurioExampleOrganization/presentations/rulesets --input - <<'JSON'
+{"name": "main", "target": "branch", "enforcement": "active",
+ "conditions": {"ref_name": {"include": ["~DEFAULT_BRANCH"], "exclude": []}},
+ "bypass_actors": [],
+ "rules": [
+  {"type": "deletion"},
+  {"type": "non_fast_forward"},
+  {"type": "required_status_checks", "parameters": {
+    "strict_required_status_checks_policy": false, "do_not_enforce_on_create": false,
+    "required_status_checks": [{"context": "check", "integration_id": 15368}]}},
+  {"type": "pull_request", "parameters": {
+    "allowed_merge_methods": ["merge"], "required_approving_review_count": 0,
+    "dismiss_stale_reviews_on_push": false, "require_code_owner_review": false,
+    "require_last_push_approval": false, "required_review_thread_resolution": false}}
+ ]}
+JSON
+gh api repos/LazurioExampleOrganization/presentations/rulesets \
+  --jq '.[] | {id, name, enforcement}'
+```
+
+Then the ruleset id goes into the table above.
 
 `automations`, `content`, `experiments`, `finance`, `infra`, `playbooks` and
 `research` have no CI workflow yet, so their rulesets require a pull request
@@ -135,13 +184,14 @@ Owner decides how `v3` gets the same rules
 That issue also records that the required "validate" check probably rejects
 the App's direct push already.
 
-### The exception: the private Deployment Repo
+### The exception: the private repositories
 
-`machines` is private, and GitHub Free has neither rulesets nor branch
-protection for private repositories: the API answers HTTP 403. Its default
-branch is therefore protected by process, not by GitHub. Only the owners and
-the maintainers' agent account reach it, and the same rules apply there as a
-rule of work: a change goes through a pull request merged with a merge
+`machines`, `time-tracker` and `time-tracker-data` are private, and GitHub
+Free has neither rulesets nor branch protection for private repositories:
+the API answers HTTP 403 (read back on 2026-11-08). Their default branches
+are therefore protected by process, not by GitHub. Only the owners and the
+maintainers' agent account reach `machines`, and the same rules apply there
+as a rule of work: a change goes through a pull request merged with a merge
 commit, and nobody force-pushes to or deletes `main`. GitHub does not enforce
 them, so a direct push there still succeeds. A paid GitHub plan would let the
 same ruleset apply.
@@ -149,7 +199,8 @@ same ruleset apply.
 ### Who is affected
 
 A direct push to the default branch of any public repository except
-`mission-control-data` is rejected, for people and agents alike. Agents that
+`mission-control-data`, and `presentations` until its ruleset exists, is
+rejected, for people and agents alike. Agents that
 used to push to `main`, or to fast-forward `main` to a green pull request
 head, now open a pull request and merge it. The rules of `v3` are unchanged
 (see [Held](#held-mission-control-data)).
@@ -178,12 +229,13 @@ required, because no ruleset requires a code owner review.
 
 | Code owner | Repositories | Why |
 |---|---|---|
-| Team `workspace` | `automations`, `content`, `design-system`, `experiments`, `knowledgebase`, `mission-control`, `playbooks`, `research` | The Team writes these repositories. |
+| Team `workspace` | `app-access`, `automations`, `content`, `design-system`, `experiments`, `knowledgebase`, `mission-control`, `playbooks`, `research` | The Team writes these repositories. |
 | Bob (`@lazurio-bob`) | `finance` | Finance belongs to Bob: Team `finance` (Bob only) writes this restricted module. |
 | Bob (`@lazurio-bob`) | `LazurioExampleOrganization_GEN3`, `infra` | Only the owners write these. GitHub accepts a code owner only with Write, and Team `workspace` has Read on the root and no grant on `infra`, so the Team cannot be named. Bob is the owner named. |
 
 The pricing module, planned as `pricebook`, gets Bob as code owner when it is
-created in milestone L3. `mission-control-data` gets its file together with
+created in milestone L3. `presentations` has no file yet; it gets Team
+`workspace` like the other workspace modules. `mission-control-data` gets its file together with
 its ruleset decision. Check a file with:
 
 ```sh
@@ -253,6 +305,8 @@ gh api repos/LazurioExampleOrganization/<repository>/rules/branches/<default bra
   [mission-control-data#5](https://github.com/LazurioExampleOrganization/mission-control-data/issues/5).
 - Required checks for the repositories without CI, when each gets its
   workflow.
+- The ruleset "main" and `.github/CODEOWNERS` for `presentations`, as
+  described in [`presentations`](#presentations).
 
 ## Guardrails
 
