@@ -1,2 +1,2 @@
-# Only the Organization owners write this repository; Bob is its code owner (see infra access/github-organization.md).
+# No Team of people writes this repository: the Organization owners administer it, and Team steward, the review account, has Maintain to review. Bob, an owner, is its code owner (see access/github-organization.md, Code owners).
 * @lazurio-bob

@@ -113,7 +113,7 @@ protects its `main`. Every ruleset:
 Read back on 2026-11-06 and again on 2026-11-08: ruleset 25208607 requires
 only "bun run test (ubuntu-latest)" (not also "bun run test (windows-latest)"
 as recorded on 2026-10-18). Mission Control 4.x, the Lazurio Marketplace
-template the Organization takes at 4.1.0 in
+template the Organization takes at 4.1.1 in
 [mission-control#7](https://github.com/LazurioExampleOrganization/mission-control/pull/7),
 renames its Linux job to "bun run check (ubuntu-latest)". Its Windows job
 "bun run check (windows-latest)" runs only when a pull request changes the
