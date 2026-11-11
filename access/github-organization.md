@@ -8,7 +8,8 @@ Verified 2026-10-18. Source: the GitHub REST API (Organization, members,
 Teams, repositories, collaborators, rulesets and app installations), read on
 2026-10-18, and the root `lazurio.organization.json`, read on 2026-10-16.
 The repositories, their visibility, the Teams' repository grants and the
-rulesets were read back on 2026-11-08 (plan DEV-6593); the members and the
+rulesets were read back on 2026-11-08 (plan DEV-6593), ruleset 25208607 again
+on 2026-11-11 after its change; the members and the
 [access matrix](matrix.md) are as of 2026-10-18.
 
 - Organization: `LazurioExampleOrganization` (id 325048785)
@@ -98,7 +99,7 @@ protects its `main`. Every ruleset:
 | `finance` | `main` | 25202740 | required | none, no CI yet |
 | `infra` | `main` | 25202739 | required | none, no CI yet |
 | `knowledgebase` | `main` | 25202737 | required | "check" |
-| `mission-control` | `main` | 25208607 | required | "bun run check (ubuntu-latest)" (proposed with Mission Control 4.x, see below) |
+| `mission-control` | `main` | 25208607 | required | "bun run check (ubuntu-latest)" (since 2026-11-11, see below) |
 | `mission-control-data` | `v3` | 25206628 | not required, held | "validate" |
 | `playbooks` | `main` | 25202743 | required | none, no CI yet |
 | `research` | `main` | 25202746 | required | none, no CI yet |
@@ -108,21 +109,23 @@ protects its `main`. Every ruleset:
 | `time-tracker` (private) | `main` | none | the exception | none |
 | `time-tracker-data` (private) | `v3` | none | the exception | none |
 
-### Mission Control 4.x: the required check (proposed 2026-11-06)
+### Mission Control 4.x: the required check (changed 2026-11-11)
 
 Read back on 2026-11-06 and again on 2026-11-08: ruleset 25208607 requires
 only "bun run test (ubuntu-latest)" (not also "bun run test (windows-latest)"
 as recorded on 2026-10-18). Mission Control 4.x, the Lazurio Marketplace
-template the Organization takes at 4.1.1 in
+template the Organization takes at 4.1.2 in
 [mission-control#7](https://github.com/LazurioExampleOrganization/mission-control/pull/7),
 renames its Linux job to "bun run check (ubuntu-latest)". Its Windows job
 "bun run check (windows-latest)" runs only when a pull request changes the
 App, the templates or a workflow, so it cannot be required. Until the
 ruleset requires the new name, #7 cannot be merged; after it does, no pull
-request built on 3.1.0 can. So an owner changes the one context in the same
-window as merging #7: Settings → Rules → Rulesets → "main" → Require status
-checks, replace "bun run test (ubuntu-latest)" with
-"bun run check (ubuntu-latest)" (GitHub Actions), and reads it back:
+request built on 3.1.0 can. So an owner changed the one context in the
+window of #7, on 2026-11-11: "bun run test (ubuntu-latest)" became
+"bun run check (ubuntu-latest)" (GitHub Actions, integration 15368). Only the
+required-checks rule changed; deletion, non-fast-forward, the pull request
+rule, the conditions and the bypass list (empty) are as before. Read back the
+same day, from the ruleset and from `rules/branches/main`:
 
 ```sh
 gh api repos/LazurioExampleOrganization/mission-control/rulesets/25208607 \
