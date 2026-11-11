@@ -19,7 +19,9 @@ Verified 2026-10-16.
   (id 1421349619). Its Lazurio manifest binds the Organization and the root
   repository by these ids; the binding state is verified.
 - Infra repository: `git@github.com:LazurioExampleOrganization/infra.git`. It
-  is declared restricted and gets no Team grant.
+  is declared restricted: no Team of people writes it, and Team `steward`, the
+  review account, has Maintain on it to review (read back on 2026-11-09; see
+  the [access record](access/github-organization.md)).
 - Repositories and rulesets: see the
   [access record](access/github-organization.md). Teams and the right of every
   person on every repository: see the [access matrix](access/matrix.md)
