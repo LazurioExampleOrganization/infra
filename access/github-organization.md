@@ -72,10 +72,8 @@ Verified 2026-10-18 by reading every ruleset back with `gh` (EX-0014 task
 `task-2026-10-18-002`, milestone L1).
 
 GitHub Free has no Organization rulesets, so each public repository has its
-own repository ruleset, named "main", on its default branch. The one
-exception is `presentations`, public since 2026-11-06, whose ruleset an owner
-still creates (see [`presentations`](#presentations)); until then nothing
-protects its `main`. Every ruleset:
+own repository ruleset, named "main", on its default branch (`presentations`
+since 2026-11-12, see [`presentations`](#presentations)). Every ruleset:
 
 - blocks deletion and force push;
 - requires a pull request: nothing reaches the default branch by a direct
@@ -104,7 +102,7 @@ protects its `main`. Every ruleset:
 | `playbooks` | `main` | 25202743 | required | none, no CI yet |
 | `research` | `main` | 25202746 | required | none, no CI yet |
 | `app-access` | `main` | 26692581 | required | none |
-| `presentations` | `main` | none yet, see [`presentations`](#presentations) | proposed: required | proposed: "check" |
+| `presentations` | `main` | 27134705 | required | "check" |
 | `machines` (private) | `main` | none | the exception | none |
 | `time-tracker` (private) | `main` | none | the exception | none |
 | `time-tracker-data` (private) | `v3` | none | the exception | none |
@@ -142,14 +140,18 @@ Created on 2026-11-06 by `lazurio module create` for the Marketplace
 adoption of Presentations (plan DEV-6593), private like every module the
 command creates. The same day, after a check of its tree and history, it was
 made public like the Organization's other modules and got their Team grants:
-`workspace` Write and `steward` Maintain (read back on 2026-11-08). A public
-repository can have a ruleset on GitHub Free, but it has none yet, and no
-`.github/CODEOWNERS`.
+`workspace` Write and `steward` Maintain (read back on 2026-11-08, `workspace`
+Write again on 2026-11-12).
 
-The owner's step, after
+On 2026-11-12, after
 [presentations#1](https://github.com/LazurioExampleOrganization/presentations/pull/1)
-brings the workflow `Check` with its job "check" to `main`: create the
-ruleset "main" like that of `design-system` and read it back.
+brought the workflow `Check` with its job "check" to `main`, an owner created
+the ruleset "main" (27134705) like that of `design-system` and read it back:
+deletion, non-fast-forward, the required check "check" from GitHub Actions
+(15368) and a required pull request merged by a merge commit, with no bypass
+actor. [presentations#2](https://github.com/LazurioExampleOrganization/presentations/pull/2)
+adds `.github/CODEOWNERS` naming Team `workspace`. The ruleset was created
+with:
 
 ```sh
 gh api -X POST repos/LazurioExampleOrganization/presentations/rulesets --input - <<'JSON'
@@ -172,7 +174,15 @@ gh api repos/LazurioExampleOrganization/presentations/rulesets \
   --jq '.[] | {id, name, enforcement}'
 ```
 
-Then the ruleset id goes into the table above.
+
+### Release tags of `design-system`
+
+Since 2026-11-12 the Organization's design system is released as a package
+(`v2.0.0`, its first release, on its merge of the template release
+LazurioTemplates/design-system v2.0.0). Its modules pin a tag, so a released
+tag must never move: the tag ruleset "Protect release tags" (27053533) on
+`refs/tags/v*` blocks deletion, update and non-fast-forward, with no bypass
+actor (read back on 2026-11-12).
 
 `automations`, `content`, `experiments`, `finance`, `infra`, `playbooks` and
 `research` have no CI workflow yet, so their rulesets require a pull request
@@ -206,8 +216,7 @@ same ruleset apply.
 ### Who is affected
 
 A direct push to the default branch of any public repository except
-`mission-control-data`, and `presentations` until its ruleset exists, is
-rejected, for people and agents alike. Agents that
+`mission-control-data` is rejected, for people and agents alike. Agents that
 used to push to `main`, or to fast-forward `main` to a green pull request
 head, now open a pull request and merge it. The rules of `v3` are unchanged
 (see [Held](#held-mission-control-data)).
@@ -229,20 +238,20 @@ used during the migration, is a direct push that the rulesets now reject.
 
 ## Code owners
 
-Every public repository except `mission-control-data` and `presentations`
-has `.github/CODEOWNERS` with one rule for every path. GitHub asks the code
+Every public repository except `mission-control-data` has
+`.github/CODEOWNERS` (`presentations` with
+[presentations#2](https://github.com/LazurioExampleOrganization/presentations/pull/2)) with one rule for every path. GitHub asks the code
 owners for a review when a pull request opens. Their approval is not
 required, because no ruleset requires a code owner review.
 
 | Code owner | Repositories | Why |
 |---|---|---|
-| Team `workspace` | `app-access`, `automations`, `content`, `design-system`, `experiments`, `knowledgebase`, `mission-control`, `playbooks`, `research` | The Team writes these repositories. |
+| Team `workspace` | `app-access`, `automations`, `content`, `design-system`, `experiments`, `knowledgebase`, `mission-control`, `playbooks`, `presentations`, `research` | The Team writes these repositories. |
 | Bob (`@lazurio-bob`) | `finance` | Finance belongs to Bob: Team `finance` (Bob only) writes this restricted module. |
 | Bob (`@lazurio-bob`) | `LazurioExampleOrganization_GEN3`, `infra` | Of the people's Teams, none writes these: Team `workspace` has Read on the root and no grant on `infra`, and GitHub accepts a code owner only with Write, so it cannot be named. The owners write them, and Team `steward`, the review account, has Maintain on them to review. Bob is the owner named. |
 
 The pricing module, planned as `pricebook`, gets Bob as code owner when it is
-created in milestone L3. `presentations` has no file yet; it gets Team
-`workspace` like the other workspace modules. `mission-control-data` gets its file together with
+created in milestone L3. `mission-control-data` gets its file together with
 its ruleset decision. Check a file with:
 
 ```sh
@@ -300,9 +309,7 @@ gh api repos/LazurioExampleOrganization/<repository>/rules/branches/<default bra
 - Governance (EX-0014 task `task-2026-10-18-002`): every public repository
   requires a pull request, its CI where it exists and a merge commit, has a
   CODEOWNERS file and has no bypass actor, as recorded in
-  [Rulesets](#rulesets); `mission-control-data` is held, and `presentations`
-  gets its ruleset and CODEOWNERS file as described in
-  [`presentations`](#presentations).
+  [Rulesets](#rulesets); `mission-control-data` is held.
 
 ## Next
 
@@ -314,8 +321,6 @@ gh api repos/LazurioExampleOrganization/<repository>/rules/branches/<default bra
   [mission-control-data#5](https://github.com/LazurioExampleOrganization/mission-control-data/issues/5).
 - Required checks for the repositories without CI, when each gets its
   workflow.
-- The ruleset "main" and `.github/CODEOWNERS` for `presentations`, as
-  described in [`presentations`](#presentations).
 
 ## Guardrails
 
